@@ -213,15 +213,15 @@ module.exports = function (content) {
         .replace('[ext]', format);
 
       if (!embed) {
-        var formatFilename = loaderUtils.interpolateName(this,
+        /*var formatFilename = loaderUtils.interpolateName(this,
           filename,
           {
             context: this.rootContext || this.options.context || this.context,
             content: res[format]
           }
-        );
-        urls[format] = url.resolve(publicPath, formatFilename.replace(/\\/g, '/'));
-        this.emitFile(formatFilename, res[format]);
+        );*/
+        //urls[format] = url.resolve(publicPath, formatFilename.replace(/\\/g, '/'));
+        //this.emitFile(formatFilename, res[format]);
       } else {
         urls[format] = 'data:' +
           mimeTypes[format] +
@@ -229,6 +229,7 @@ module.exports = function (content) {
           (Buffer.from(res[format]).toString('base64'));
       }
     }
+
     var emitCodepointsOptions = fontConfig.emitCodepoints || options.emitCodepoints || null;
     if (emitCodepointsOptions) {
       var emitCodepoints = require('./emit-codepoints');
