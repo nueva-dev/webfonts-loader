@@ -101,7 +101,7 @@ module.exports = function (content) {
     dest: fontConfig.dest || '',
     html: fontConfig.html || false,
     htmlDest: fontConfig.htmlDest || undefined,
-    writeFiles: fontConfig.writeFiles || false,
+    writeFiles: fontConfig.writeFiles || true,
     cssFontsUrl: fontConfig.cssFontsUrl || '',
     embed: fontConfig.embed || false,
     formatOptions: fontConfig.formatOptions || {}
@@ -149,7 +149,8 @@ module.exports = function (content) {
 
   // Spit out SCSS file to same path as CSS file to easily use mixins (scssFile must be true)
   if (fontConfig.scssFile === true) {
-    generatorOptions.cssDest = path.resolve(this.context, fontConfig.fontName + '.scss');
+    fontConfig.scssDest = fontConfig.scssDest || '';
+    generatorOptions.cssDest = path.resolve(fontConfig.scssDest, fontConfig.scssFileName+ '.scss');
   }
 
   // svgicons2svgfont stuff
@@ -223,9 +224,9 @@ module.exports = function (content) {
         this.emitFile(formatFilename, res[format]);
       } else {
         urls[format] = 'data:' +
-        mimeTypes[format] +
-        ';charset=utf-8;base64,' +
-        (Buffer.from(res[format]).toString('base64'));
+          mimeTypes[format] +
+          ';charset=utf-8;base64,' +
+          (Buffer.from(res[format]).toString('base64'));
       }
     }
     var emitCodepointsOptions = fontConfig.emitCodepoints || options.emitCodepoints || null;
